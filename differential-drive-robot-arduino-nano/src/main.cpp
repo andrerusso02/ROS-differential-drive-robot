@@ -1,6 +1,7 @@
 #include <Arduino.h>
 //#include "Motor.h"
 #include "MotorPIDControl.h"
+#include "Encoders.h"
 #include "Config.h"
 
 #include <ros.h>
@@ -24,40 +25,43 @@ ros::Subscriber<geometry_msgs::Twist> sub("/cmd_vel", printCommand);
 
 
 double cmd_vel_left = 0;
-Motor motorL = Motor(Pins::enableL, Pins::dir1L, Pins::dir2L, Pins::encoderL);
-MotorPIDControl motorPIDControlL = MotorPIDControl(&cmd_vel_left, &motorL);
+Motor motorL = Motor(Pins::enableL, Pins::dir1L, Pins::dir2L, &ENCODERS_global_vars::current_direction_left_motor);
+MotorPIDControl motorPIDControlL = MotorPIDControl(&cmd_vel_left, &motorL, &ENCODERS_global_vars::current_velocity_left);
+
+
+void test(){
+  motorL.rotate(255); delay(2000);
+  motorL.rotate(0);   delay(2000);
+  motorL.rotate(-255);delay(2000);
+  motorL.rotate(0);   delay(2000);
+}
 
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
+  ENCODERS_init_callbacks(Pins::encoderL, -1);
+
+  motorL.rotate(100);
 
 }
 
 void loop() {
-  motorL.rotate(255);
-  delay(2000);
-  motorL.rotate(0);
-  delay(2000);
-  motorL.rotate(-255);
-  delay(2000);
-  motorL.rotate(0);
-  delay(2000);
+
+  ENCODERS_update_current_velocity_measures();
+
   // //nodeHandle.spinOnce(); // calls the callback waiting to be called
   // //delay(10);
 
-  // int a = analogRead(A7);
+   int a = analogRead(A7);
 
-  // // convert a from 0/1023 to -400/400
-  // cmd_vel_left = (a - 512) / 512.0 * 600;
-  // //double cmd_vel_left = (a - 512) / 512.0 * 0.19;
+  cmd_vel_left = (a - 512) / 512.0 * 0.23;
   
-  // Serial.print("cmd_vel: " + String(cmd_vel_left));
-  // motorPIDControlL.spinOnce();
-  // //delay(100);
+  Serial.print("cmd_vel: " + String(cmd_vel_left));
+  motorPIDControlL.spinOnce();
 
-
-
+  delay(200);
+  
   // a = map(a, 0, 1023, -255, 255);
    //Serial.println("                  Command: " + String(a));
    //motorL.rotate(a);

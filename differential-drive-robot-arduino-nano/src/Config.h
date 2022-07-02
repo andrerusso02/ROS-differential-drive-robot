@@ -1,4 +1,3 @@
-#ifndef CONGIG_H
 
 namespace Pins
 {
@@ -20,4 +19,4 @@ namespace PIDConfig
     extern float ki;
     extern float kd;
 }
-#endif // CONFIG_H
+
