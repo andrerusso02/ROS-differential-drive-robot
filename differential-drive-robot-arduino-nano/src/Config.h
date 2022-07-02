@@ -13,4 +13,11 @@ namespace RobotModel
     extern double nbPulsesPerMotorRevelution;
     extern double wheelCircumference;
 }
+
+namespace PIDConfig
+{
+    extern float kp;
+    extern float ki;
+    extern float kd;
+}
 #endif // CONFIG_H

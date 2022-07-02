@@ -4,12 +4,8 @@
 
 #include <ros.h>
 #include <geometry_msgs/Twist.h>
-#include <PID_V1.h>
 #include <geometry_msgs/Vector3Stamped.h>
 #include <ros/time.h>
-
-
-Motor motorL = Motor(Pins::enableL, Pins::dir1L, Pins::dir2L, Pins::encoderL);
 
 
 void printCommand(const geometry_msgs::Twist& msg)
@@ -21,7 +17,13 @@ void printCommand(const geometry_msgs::Twist& msg)
     Serial.println();
 }
 
+// ROS
+ros::NodeHandle  nodeHandle;
 ros::Subscriber<geometry_msgs::Twist> sub("/cmd_vel", printCommand);
+
+
+Motor motorL = Motor(Pins::enableL, Pins::dir1L, Pins::dir2L, Pins::encoderL);
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -31,10 +33,6 @@ void setup() {
 }
 
 void loop() {
-  for(int i=100; i<255; i+=10)
-  {
-    motorL.rotate(i);
-    delay(500);
-    // Serial.println(i);
-  }
+  nodeHandle.spinOnce(); // calls the callback waiting to be called
+  delay(10);
 }
