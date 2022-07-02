@@ -35,21 +35,31 @@ void setup() {
 }
 
 void loop() {
-  //nodeHandle.spinOnce(); // calls the callback waiting to be called
-  //delay(10);
+  motorL.rotate(255);
+  delay(2000);
+  motorL.rotate(0);
+  delay(2000);
+  motorL.rotate(-255);
+  delay(2000);
+  motorL.rotate(0);
+  delay(2000);
+  // //nodeHandle.spinOnce(); // calls the callback waiting to be called
+  // //delay(10);
 
-  int a = analogRead(A7);
+  // int a = analogRead(A7);
 
-  // convert a from 0/1023 to -0.19/-0.19
-  double cmd_vel_left = (a - 512) / 512.0 * 0.19;
-  Serial.print("cmd_vel: " + String(cmd_vel_left));
-  motorPIDControlL.spinOnce();
-  //delay(100);
+  // // convert a from 0/1023 to -400/400
+  // cmd_vel_left = (a - 512) / 512.0 * 600;
+  // //double cmd_vel_left = (a - 512) / 512.0 * 0.19;
+  
+  // Serial.print("cmd_vel: " + String(cmd_vel_left));
+  // motorPIDControlL.spinOnce();
+  // //delay(100);
 
 
 
   // a = map(a, 0, 1023, -255, 255);
-  // Serial.println("                  Command: " + String(a));
-  // motorL.rotate(a);
-  // delay(500);
+   //Serial.println("                  Command: " + String(a));
+   //motorL.rotate(a);
+   //delay(500);
 }

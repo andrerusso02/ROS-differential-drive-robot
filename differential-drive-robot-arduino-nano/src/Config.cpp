@@ -16,7 +16,7 @@ namespace RobotModel
 
 namespace PIDConfig
 {
-    float kp = 2.0;
-    float ki = 5.0;
+    float kp = 0.1;
+    float ki = 1.0;
     float kd = 1.0;
 }

@@ -15,8 +15,13 @@ void interrupt_callback()
     {
         iEch = 0;
         unsigned long time_now = millis();
-        current_velocity = current_direction * RobotModel::wheelCircumference * 1000.0
-                            / ((RobotModel::nbPulsesPerMotorRevelution/5.0) * (double)(time_now - time_last_pulse));
+        // current_velocity = current_direction * RobotModel::wheelCircumference * 1000.0
+        //                     / ((RobotModel::nbPulsesPerMotorRevelution/5.0) * (double)(time_now - time_last_pulse));
+        current_velocity = current_direction * 5 / (double)(time_now - time_last_pulse)* 1000.0;
+        if(abs(current_velocity) < 60.0)
+        {
+            current_velocity = 0;
+        }
         time_last_pulse = time_now;
         Serial.println("Velocity: " + String(current_velocity));
     }
