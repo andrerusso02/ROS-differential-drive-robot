@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include "Motor.h"
+//#include "Motor.h"
+#include "MotorPIDControl.h"
 #include "Config.h"
 
 #include <ros.h>
@@ -22,17 +23,33 @@ ros::NodeHandle  nodeHandle;
 ros::Subscriber<geometry_msgs::Twist> sub("/cmd_vel", printCommand);
 
 
+double cmd_vel_left = 0;
 Motor motorL = Motor(Pins::enableL, Pins::dir1L, Pins::dir2L, Pins::encoderL);
+MotorPIDControl motorPIDControlL = MotorPIDControl(&cmd_vel_left, &motorL);
 
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  // motorL.rotate(255);
 
 }
 
 void loop() {
-  nodeHandle.spinOnce(); // calls the callback waiting to be called
-  delay(10);
+  //nodeHandle.spinOnce(); // calls the callback waiting to be called
+  //delay(10);
+
+  int a = analogRead(A7);
+
+  // convert a from 0/1023 to -0.19/-0.19
+  double cmd_vel_left = (a - 512) / 512.0 * 0.19;
+  Serial.print("cmd_vel: " + String(cmd_vel_left));
+  motorPIDControlL.spinOnce();
+  //delay(100);
+
+
+
+  // a = map(a, 0, 1023, -255, 255);
+  // Serial.println("                  Command: " + String(a));
+  // motorL.rotate(a);
+  // delay(500);
 }
