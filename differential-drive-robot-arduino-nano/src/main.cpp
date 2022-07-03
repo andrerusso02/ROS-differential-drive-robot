@@ -57,10 +57,10 @@ void loop() {
 
   cmd_vel_left = (a - 512) / 512.0 * 0.23;
   
-  Serial.print("cmd_vel: " + String(cmd_vel_left));
+  Serial.print("commande: " + String(cmd_vel_left));
   motorPIDControlL.spinOnce();
 
-  delay(200);
+  delay(100);
   
   // a = map(a, 0, 1023, -255, 255);
    //Serial.println("                  Command: " + String(a));

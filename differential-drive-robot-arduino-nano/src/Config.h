@@ -18,5 +18,8 @@ namespace PIDConfig
     extern float kp;
     extern float ki;
     extern float kd;
+
+    extern float max_output;
+    extern float min_command;
 }
 
