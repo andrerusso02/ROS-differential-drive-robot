@@ -5,6 +5,11 @@ namespace Pins
     extern int dir1L;
     extern int dir2L;
     extern int encoderL;
+
+    extern int enableR;
+    extern int dir1R;
+    extern int dir2R;
+    extern int encoderR;
 }
 
 namespace RobotModel

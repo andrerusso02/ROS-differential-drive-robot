@@ -6,6 +6,11 @@ namespace Pins
     int dir1L = 11;
     int dir2L = 12;
     int encoderL = 2;
+
+    int enableR = 7;
+    int dir1R = 8;
+    int dir2R = 9;
+    int encoderR = 3;
 }
 
 namespace RobotModel
