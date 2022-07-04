@@ -18,6 +18,7 @@ namespace RobotModel
     double nbPulsesPerMotorRevelution = 200;
     double wheelCircumference = 0.3192; // m (diameter = 2inch = 5.08cm)
     double maxVelocity = 0.23; // m/s
+    double width = 0.222; // m
 }
 
 namespace PIDConfig

@@ -30,6 +30,5 @@ void MotorPIDControl::spinOnce()
     }
     this->pid->Compute();
     int pwm = output / RobotModel::maxVelocity * 255.0;
-    Serial.println(" m/s     mesure vitesse: " + String(*input_velocity) + " m/s     output: " + String(output));
     this->motor->rotate(pwm);
 }

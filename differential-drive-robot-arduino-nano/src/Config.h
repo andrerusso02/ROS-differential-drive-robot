@@ -17,6 +17,7 @@ namespace RobotModel
     extern double nbPulsesPerMotorRevelution;
     extern double wheelCircumference;
     extern double maxVelocity;
+    extern double width;
 }
 
 namespace PIDConfig
