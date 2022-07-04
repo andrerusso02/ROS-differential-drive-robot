@@ -7,9 +7,9 @@ namespace Pins
     int dir2L = 12;
     int encoderL = 2;
 
-    int enableR = 7;
+    int enableR = 9;
     int dir1R = 8;
-    int dir2R = 9;
+    int dir2R = 7;
     int encoderR = 3;
 }
 
@@ -17,6 +17,7 @@ namespace RobotModel
 {
     double nbPulsesPerMotorRevelution = 200;
     double wheelCircumference = 0.3192; // m (diameter = 2inch = 5.08cm)
+    double maxVelocity = 0.23; // m/s
 }
 
 namespace PIDConfig

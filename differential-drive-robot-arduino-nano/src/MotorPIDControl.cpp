@@ -13,8 +13,7 @@ MotorPIDControl::MotorPIDControl(double* cmd_vel, Motor* motor, double* input_ve
     this->input_velocity = input_velocity;
     this->pid = new PID(input_velocity, &output, cmd_vel, PIDConfig::kp, PIDConfig::ki, PIDConfig::kd, DIRECT);
     pid->SetMode(AUTOMATIC); // turn on PID
-    //pid->SetOutputLimits(-PIDConfig::max_output, PIDConfig::max_output); // set the output limits
-    pid->SetOutputLimits(-255, 255); // set the output limits
+    pid->SetOutputLimits(-PIDConfig::max_output, PIDConfig::max_output); // set the output limits
 
 
 }
@@ -30,7 +29,7 @@ void MotorPIDControl::spinOnce()
          pid->SetMode(AUTOMATIC);   
     }
     this->pid->Compute();
-    //int pwm = output / 0.23 * 255.0;
+    int pwm = output / RobotModel::maxVelocity * 255.0;
     Serial.println(" m/s     mesure vitesse: " + String(*input_velocity) + " m/s     output: " + String(output));
-    this->motor->rotate(output);
+    this->motor->rotate(pwm);
 }
