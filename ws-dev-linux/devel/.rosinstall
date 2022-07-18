@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/devel/setup.sh
