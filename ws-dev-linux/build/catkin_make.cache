@@ -1,2 +1,0 @@
-differential-drive:my-robot
--DCATKIN_DEVEL_PREFIX=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/devel -DCMAKE_INSTALL_PREFIX=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/install -G Unix Makefiles
