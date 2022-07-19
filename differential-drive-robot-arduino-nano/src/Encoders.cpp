@@ -12,21 +12,21 @@ namespace ENCODERS_global_vars
 
     double current_velocity_left = 0;
     double current_velocity_right = 0;
+
+    volatile long nb_ticks_encoder_l = 0;
+    volatile long nb_ticks_encoder_r = 0;
 }
-
-volatile long nb_ticks_encoder_left_since_update = 0;
-volatile long nb_ticks_encoder_right_since_update = 0;
-
-
 
 void ENCODERS_left_interrupt_callback()
 {
-    nb_ticks_encoder_left_since_update = nb_ticks_encoder_left_since_update + ENCODERS_global_vars::current_direction_left_motor;
+    ENCODERS_global_vars::nb_ticks_encoder_l =
+        ENCODERS_global_vars::nb_ticks_encoder_l + ENCODERS_global_vars::current_direction_left_motor;
 }
 
 void ENCODERS_right_interrupt_callback()
 {
-    nb_ticks_encoder_right_since_update = nb_ticks_encoder_right_since_update + ENCODERS_global_vars::current_direction_right_motor;
+    ENCODERS_global_vars::nb_ticks_encoder_r =
+        ENCODERS_global_vars::nb_ticks_encoder_r + ENCODERS_global_vars::current_direction_right_motor;
 }
 
 void ENCODERS_init_callbacks(int pinL, int pinR)
@@ -37,12 +37,18 @@ void ENCODERS_init_callbacks(int pinL, int pinR)
     attachInterrupt(digitalPinToInterrupt(pinR), &ENCODERS_right_interrupt_callback, RISING);
 }
 
+
+// TODO tester (modifié pour passer de previous_tick_count_l à nb_ticks_encoder_l...)
 void ENCODERS_update_current_velocity_measures()
 {
     static unsigned long t_last_call = 0;
+    static long previous_tick_count_l = 0;
+    static long previous_tick_count_r = 0;
     if(t_last_call == 0)
     {
         t_last_call = millis();
+        previous_tick_count_l = ENCODERS_global_vars::nb_ticks_encoder_l;
+        previous_tick_count_r = ENCODERS_global_vars::nb_ticks_encoder_r;
         return;
     }
     unsigned long t_now = millis();
@@ -50,12 +56,15 @@ void ENCODERS_update_current_velocity_measures()
     t_last_call = t_now;
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
     {
-        ENCODERS_global_vars::current_velocity_left = (nb_ticks_encoder_left_since_update / dt) * RobotModel::wheelCircumference
+        ENCODERS_global_vars::current_velocity_left =
+            ((ENCODERS_global_vars::nb_ticks_encoder_l-previous_tick_count_l) / dt) * RobotModel::wheelCircumference
              / RobotModel::nbPulsesPerMotorRevelution;
-        ENCODERS_global_vars::current_velocity_right = (nb_ticks_encoder_right_since_update / dt) * RobotModel::wheelCircumference
+        ENCODERS_global_vars::current_velocity_right =
+            ((ENCODERS_global_vars::nb_ticks_encoder_r-previous_tick_count_r) / dt) * RobotModel::wheelCircumference
             / RobotModel::nbPulsesPerMotorRevelution;
-        nb_ticks_encoder_left_since_update = 0;
-        nb_ticks_encoder_right_since_update = 0;
+        previous_tick_count_l = ENCODERS_global_vars::nb_ticks_encoder_l;
+        previous_tick_count_r = ENCODERS_global_vars::nb_ticks_encoder_r;
     }
 
 }
+
