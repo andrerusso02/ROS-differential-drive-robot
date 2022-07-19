@@ -1,8 +1,0 @@
-prefix=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/install
-
-Name: my-robot
-Description: Description of my-robot
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
