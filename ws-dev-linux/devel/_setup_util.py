@@ -268,7 +268,7 @@ if __name__ == '__main__':
 
         if not args.local:
             # environment at generation time
-            CMAKE_PREFIX_PATH = r'/home/arusso/dev/ROS-differential-drive-robot/ROS_DDR_linux/devel;/opt/ros/noetic'.split(';')
+            CMAKE_PREFIX_PATH = r'/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/devel;/opt/ros/noetic'.split(';')
         else:
             # don't consider any other prefix path than this one
             CMAKE_PREFIX_PATH = []
