@@ -383,6 +383,12 @@ _gtest_SOURCES:FILEPATH=/usr/src/gtest/src/gtest.cc
 catkin_DIR:PATH=/opt/ros/noetic/share/catkin/cmake
 
 //Value Computed by CMake
+differential_drive_BINARY_DIR:STATIC=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/build/differential-drive
+
+//Value Computed by CMake
+differential_drive_SOURCE_DIR:STATIC=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/src/differential-drive
+
+//Value Computed by CMake
 gmock_BINARY_DIR:STATIC=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/build/gtest/googlemock
 
 //Dependencies for the target
@@ -427,6 +433,12 @@ gtest_hide_internal_symbols:BOOL=OFF
 
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;gtest;
+
+//Value Computed by CMake
+my-robot_BINARY_DIR:STATIC=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/build/my-robot
+
+//Value Computed by CMake
+my-robot_SOURCE_DIR:STATIC=/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/src/my-robot
 
 
 ########################
@@ -576,7 +588,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

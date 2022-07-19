@@ -131,6 +131,8 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/build/gtest/cmake_install.cmake")
+  include("/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/build/my-robot/cmake_install.cmake")
+  include("/home/arusso/dev/ROS-differential-drive-robot/ws-dev-linux/build/differential-drive/cmake_install.cmake")
 
 endif()
 
