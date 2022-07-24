@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   hardware_interface
+  controller_manager
 )
 
 ## System dependencies are found with CMake's conventions
@@ -208,5 +209,5 @@ include_directories(
 ## Build nodes
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-add_executable(ddbot_base src/ddbot_base.cpp)
+add_executable(ddbot_base src/ddbot_base.cpp src/ddbot_hardware.cpp)
 target_link_libraries(ddbot_base ${catkin_LIBRARIES})
