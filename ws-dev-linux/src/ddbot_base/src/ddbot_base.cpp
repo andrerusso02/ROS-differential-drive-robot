@@ -17,17 +17,29 @@ int main(int argc, char *argv[])
     // Create an instance of the controller manager and pass it the robot, so that it can handle its resources.
     controller_manager::ControllerManager cm(&ddbot);
 
-
-
     // 1 Hz rate
     ros::Rate rate(1.0); 
-    rate.sleep();
 
+    ros::Time last_time = ros::Time::now();
+    rate.sleep();
+    
+    
     // Blocks until shutdown signal recieved
     while (ros::ok())
     {
+        
+        // Read the current state of the robot from the hardware
+        ddbot.readFromHardware();
 
-        ddbot.test();
+        ros::Duration period = ros::Time::now() - last_time;
+
+        // Update the controller manager
+        cm.update(ros::Time::now(), period);
+
+        // Write the commands to the robot
+        ddbot.writeToHardware();
+
+        ros::spinOnce();
 
         rate.sleep();
     }

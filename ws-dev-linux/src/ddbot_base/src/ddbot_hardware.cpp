@@ -1,15 +1,28 @@
 #include "ddbot_base/ddbot_hardware.h"
+#include "std_msgs/Float32.h"
 
 
-    DdbotHardware::DdbotHardware(ros::NodeHandle &nh)
+
+    DdbotHardware::DdbotHardware(ros::NodeHandle& nh):nh_(nh)
     {
-        nh = nh;
- 
-    }
 
-    bool DdbotHardware::init(ros::NodeHandle &root_nh, ros::NodeHandle &robot_hw_nh)
-    {
+
         ROS_INFO("Initializing ddbot Hardware Interface ...");
+
+        // velocities in rad/s
+
+        // Setup publishers for motors
+        pub_left_motor_velocity_ = nh_.advertise<std_msgs::Float32>("cmd_vel_motor_l", 1); // 1 = throw away old message if new message coming
+        pub_right_motor_velocity_ = nh_.advertise<std_msgs::Float32>("cmd_vel_motor_r", 1);
+
+        // Setup subscribers for encoders
+        sub_left_encoder_ = nh_.subscribe("encoder_vel_motor_l", 1, &DdbotHardware::leftEncoderCallback, this);
+        sub_right_encoder_ = nh_.subscribe("encoder_vel_motor_r", 1, &DdbotHardware::rightEncoderCallback, this);
+
+
+
+
+        // ============ Initialize the joint state interface ============ // todo put in init()
 
         joints_[0].name = "left_wheel";
         joints_[1].name = "right_wheel";
@@ -37,7 +50,37 @@
 
         ROS_INFO("... Done Initializing ddbot Hardware Interface");
 
-        return true;
+    }
+
+    void DdbotHardware::writeToHardware()
+    {
+        std_msgs::Float32 left_motor_velocity_msg;
+        std_msgs::Float32 right_motor_velocity_msg;
+        left_motor_velocity_msg.data = joints_[0].velocity_command;
+        right_motor_velocity_msg.data = joints_[1].velocity_command;
+
+        // Publish the commands to the motors
+        pub_left_motor_velocity_.publish(left_motor_velocity_msg);
+        pub_right_motor_velocity_.publish(right_motor_velocity_msg);
+    
+    }
+
+    void DdbotHardware::readFromHardware()
+    {
+        joints_[0].position = left_encoder_vel_;
+        joints_[1].position = right_encoder_vel_;
+    }
+
+
+
+    void DdbotHardware::leftEncoderCallback(const std_msgs::Float32::ConstPtr& msg)
+    {
+        left_encoder_vel_ = msg->data;
+    }
+
+    void DdbotHardware::rightEncoderCallback(const std_msgs::Float32::ConstPtr& msg)
+    {
+        right_encoder_vel_ = msg->data;
     }
 
 
