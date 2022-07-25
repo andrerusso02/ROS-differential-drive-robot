@@ -24,8 +24,8 @@
 
         // ============ Initialize the joint state interface ============ // todo put in init()
 
-        joints_[0].name = "left_wheel";
-        joints_[1].name = "right_wheel";
+        joints_[0].name = "wheel_left_joint";
+        joints_[1].name = "wheel_right_joint";
 
         for (unsigned int i = 0; i < 2; i++)
         {
