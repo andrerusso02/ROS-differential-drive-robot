@@ -12,6 +12,8 @@ namespace ENCODERS_global_vars
 
     double current_velocity_left = 0;
     double current_velocity_right = 0;
+    double current_position_left = 0;
+    double current_position_right = 0;
 }
 
 volatile long nb_ticks_encoder_l = 0;
@@ -62,7 +64,12 @@ void ENCODERS_update_current_velocity_measures()
             ((nb_ticks_encoder_l-previous_tick_count_l)/RobotModel::nbPulsesPerMotorRevelution*3.14) / dt; // rad/s
         ENCODERS_global_vars::current_velocity_right =
             ((nb_ticks_encoder_r-previous_tick_count_r)/RobotModel::nbPulsesPerMotorRevelution*3.14) / dt; // rad/s
-           
+        
+        ENCODERS_global_vars::current_position_left =
+            (nb_ticks_encoder_l/RobotModel::nbPulsesPerMotorRevelution*3.14159265359); // rad
+        ENCODERS_global_vars::current_position_right =
+            (nb_ticks_encoder_r/RobotModel::nbPulsesPerMotorRevelution*3.14159265359); // rad
+
         previous_tick_count_l = nb_ticks_encoder_l;
         previous_tick_count_r = nb_ticks_encoder_r;
     }

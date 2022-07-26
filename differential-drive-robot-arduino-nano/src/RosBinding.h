@@ -9,4 +9,4 @@ extern std_msgs::Int16 ROS_cnt_ticks_right;
 
 void ROS_init();
 
-void publish_encoders_velocities(double *vel_left, double *vel_right);
+void publish_hardware_feedback(double *vel_left, double *vel_right, double *pos_left, double *pos_right);

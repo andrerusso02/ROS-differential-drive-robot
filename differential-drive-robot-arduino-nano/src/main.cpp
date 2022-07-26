@@ -23,7 +23,10 @@ void loop() {
 
   ENCODERS_update_current_velocity_measures();
 
-  publish_encoders_velocities(&ENCODERS_global_vars::current_velocity_left, &ENCODERS_global_vars::current_velocity_right);
+  publish_hardware_feedback(&ENCODERS_global_vars::current_velocity_left,
+                            &ENCODERS_global_vars::current_velocity_right,
+                            &ENCODERS_global_vars::current_position_left,
+                            &ENCODERS_global_vars::current_position_right);
 
   ROS_nodeHandle.spinOnce(); // calls the callback waiting to be called
 
