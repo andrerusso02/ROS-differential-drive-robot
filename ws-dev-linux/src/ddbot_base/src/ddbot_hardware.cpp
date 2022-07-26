@@ -12,12 +12,14 @@
         // velocities in rad/s
 
         // Setup publishers for motors
-        pub_left_motor_velocity_ = nh_.advertise<std_msgs::Float32>("cmd_vel_motor_l", 1); // 1 = throw away old message if new message coming
-        pub_right_motor_velocity_ = nh_.advertise<std_msgs::Float32>("cmd_vel_motor_r", 1);
+        pub_left_motor_velocity_ = nh_.advertise<std_msgs::Float32>("hardware_cmd/vel_l", 1); // 1 = throw away old message if new message coming
+        pub_right_motor_velocity_ = nh_.advertise<std_msgs::Float32>("hardware_cmd/vel_r", 1);
 
         // Setup subscribers for encoders
-        sub_left_encoder_ = nh_.subscribe("encoder_vel_motor_l", 1, &DdbotHardware::leftEncoderCallback, this);
-        sub_right_encoder_ = nh_.subscribe("encoder_vel_motor_r", 1, &DdbotHardware::rightEncoderCallback, this);
+        sub_left_encoder_ = nh_.subscribe("hardware_feedback/vel_l", 1, &DdbotHardware::leftVelCallback, this);
+        sub_right_encoder_ = nh_.subscribe("hardware_feedback/vel_r", 1, &DdbotHardware::rightVelCallback, this);
+        sub_left_encoder_ = nh_.subscribe("hardware_feedback/pos_l", 1, &DdbotHardware::leftPosCallback, this);
+        sub_right_encoder_ = nh_.subscribe("hardware_feedback/pos_r", 1, &DdbotHardware::rightPosCallback, this);
 
 
 
@@ -54,48 +56,50 @@
 
     void DdbotHardware::writeToHardware()
     {
-        static double last_left_velocity = 0.0;
-        static double last_right_velocity = 0.0;
 
         double cmd_left_velocity = joints_[0].velocity_command;
         double cmd_right_velocity = joints_[1].velocity_command;
 
-        if(last_left_velocity != cmd_left_velocity || last_right_velocity != cmd_right_velocity)
-        {
-            std_msgs::Float32 left_motor_velocity_msg;
-            std_msgs::Float32 right_motor_velocity_msg;
-            left_motor_velocity_msg.data = cmd_left_velocity;
-            right_motor_velocity_msg.data = cmd_right_velocity;
+        std_msgs::Float32 left_motor_velocity_msg;
+        std_msgs::Float32 right_motor_velocity_msg;
+        left_motor_velocity_msg.data = cmd_left_velocity;
+        right_motor_velocity_msg.data = cmd_right_velocity;
 
-            ROS_INFO("Sending vels to hardware : L = %f \tR = %f", cmd_left_velocity, cmd_right_velocity);
+        ROS_INFO("Sending vels to hardware : L = %f \tR = %f", cmd_left_velocity, cmd_right_velocity);
 
-            // Publish the commands to the motors
-            pub_left_motor_velocity_.publish(left_motor_velocity_msg);
-            pub_right_motor_velocity_.publish(right_motor_velocity_msg);
-
-            last_left_velocity = cmd_left_velocity;
-            last_right_velocity = cmd_right_velocity;
-        }
-
-    
+        // Publish the commands to the motors
+        pub_left_motor_velocity_.publish(left_motor_velocity_msg);
+        pub_right_motor_velocity_.publish(right_motor_velocity_msg);
     }
 
     void DdbotHardware::readFromHardware()
     {
-        joints_[0].position = left_encoder_vel_;
-        joints_[1].position = right_encoder_vel_;
+        joints_[0].velocity = left_encoder_vel_;
+        joints_[1].velocity = right_encoder_vel_;
+        joints_[0].position = left_encoder_pos_;
+        joints_[1].position = right_encoder_pos_;
     }
 
 
 
-    void DdbotHardware::leftEncoderCallback(const std_msgs::Float32::ConstPtr& msg)
+    void DdbotHardware::leftVelCallback(const std_msgs::Float32::ConstPtr& msg)
     {
         left_encoder_vel_ = msg->data;
     }
 
-    void DdbotHardware::rightEncoderCallback(const std_msgs::Float32::ConstPtr& msg)
+    void DdbotHardware::rightVelCallback(const std_msgs::Float32::ConstPtr& msg)
     {
         right_encoder_vel_ = msg->data;
+    }
+
+    void DdbotHardware::leftPosCallback(const std_msgs::Float32::ConstPtr& msg)
+    {
+        left_encoder_pos_ = msg->data;
+    }
+
+    void DdbotHardware::rightPosCallback(const std_msgs::Float32::ConstPtr& msg)
+    {
+        right_encoder_pos_ = msg->data;
     }
 
 

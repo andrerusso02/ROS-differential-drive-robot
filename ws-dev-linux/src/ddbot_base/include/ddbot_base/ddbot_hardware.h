@@ -53,11 +53,15 @@ class DdbotHardware : public hardware_interface::RobotHW
         ros::Subscriber sub_right_encoder_;
 
         // encoders callbacks
-        void leftEncoderCallback(const std_msgs::Float32::ConstPtr& msg);
-        void rightEncoderCallback(const std_msgs::Float32::ConstPtr& msg);
+        void leftVelCallback(const std_msgs::Float32::ConstPtr& msg);
+        void rightVelCallback(const std_msgs::Float32::ConstPtr& msg);
+        void leftPosCallback(const std_msgs::Float32::ConstPtr& msg);
+        void rightPosCallback(const std_msgs::Float32::ConstPtr& msg);
         // variables for encoders callbacks
         _Float32 left_encoder_vel_;
         _Float32 right_encoder_vel_;
+        _Float32 left_encoder_pos_;
+        _Float32 right_encoder_pos_;
 };
 
 
