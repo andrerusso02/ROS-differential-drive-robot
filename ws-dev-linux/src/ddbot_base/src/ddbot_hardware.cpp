@@ -12,8 +12,8 @@
         // velocities in rad/s
 
         // Setup publishers for motors
-        pub_left_motor_velocity_ = nh_.advertise<std_msgs::Float32>("hardware_cmd/vel_l", 1); // 1 = throw away old message if new message coming
-        pub_right_motor_velocity_ = nh_.advertise<std_msgs::Float32>("hardware_cmd/vel_r", 1);
+        pub_left_motor_velocity_ = nh_.advertise<std_msgs::Float32>("hardware_command/vel_l", 1); // 1 = throw away old message if new message coming
+        pub_right_motor_velocity_ = nh_.advertise<std_msgs::Float32>("hardware_command/vel_r", 1);
 
         // Setup subscribers for encoders
         sub_left_encoder_ = nh_.subscribe("hardware_feedback/vel_l", 1, &DdbotHardware::leftVelCallback, this);
