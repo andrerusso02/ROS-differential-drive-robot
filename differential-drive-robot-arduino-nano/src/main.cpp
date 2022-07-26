@@ -17,13 +17,12 @@ void setup() {
   // put your setup code here, to run once:
   ENCODERS_init_callbacks(Pins::encoderL, Pins::encoderR);
   ROS_init();
-
 }
 
 void loop() {
 
   // update tick count for ROS
-  publish_encoders_ticks(&ENCODERS_global_vars::nb_ticks_encoder_l, &ENCODERS_global_vars::nb_ticks_encoder_r);
+  publish_encoders_velocities(&ENCODERS_global_vars::current_velocity_left, &ENCODERS_global_vars::current_velocity_right);
 
   ROS_nodeHandle.spinOnce(); // calls the callback waiting to be called
 
@@ -31,5 +30,16 @@ void loop() {
   motorPIDControlR.spinOnce();
 
   delay(100);
+
+  
+  // use this for debug
+  /* 
+  ENCODERS_update_current_velocity_measures();
+  int val = analogRead(A0);
+  float val_float = ((float)val / 1023.0 * 6.0) - 3.0;
+  ROS_cmd_vel_right = val_float;
+  motorPIDControlR.spinOnce();
+  delay(100);
+  */
   
 }

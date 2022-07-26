@@ -16,9 +16,6 @@ namespace Pins
 namespace RobotModel
 {
     double nbPulsesPerMotorRevelution = 200;
-    double wheelCircumference = 0.1596; // m (diameter = 2inch = 5.08cm)
-    double maxVelocity = 0.23; // m/s
-    double width = 0.222; // m
 }
 
 namespace PIDConfig
@@ -27,8 +24,8 @@ namespace PIDConfig
     float ki = 5.0;
     float kd = 0.00;
 
-    float max_output = 0.3;
-    float min_command = 0.06;
+    float max_output = 3.0; // (on peut dire rad/s mais cela sert juste à avoir une sortie de pid à l'échelle de l'entrée) 
+    float min_command = 0.30;
 }
 
     // 2e meilleur
