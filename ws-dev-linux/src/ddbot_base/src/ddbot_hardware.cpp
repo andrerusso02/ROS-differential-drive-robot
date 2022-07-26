@@ -54,28 +54,21 @@
 
     void DdbotHardware::writeToHardware()
     {
-        static double last_left_velocity = 0.0;
-        static double last_right_velocity = 0.0;
 
         double cmd_left_velocity = joints_[0].velocity_command;
         double cmd_right_velocity = joints_[1].velocity_command;
 
-        if(last_left_velocity != cmd_left_velocity || last_right_velocity != cmd_right_velocity)
-        {
-            std_msgs::Float32 left_motor_velocity_msg;
-            std_msgs::Float32 right_motor_velocity_msg;
-            left_motor_velocity_msg.data = cmd_left_velocity;
-            right_motor_velocity_msg.data = cmd_right_velocity;
+        std_msgs::Float32 left_motor_velocity_msg;
+        std_msgs::Float32 right_motor_velocity_msg;
+        left_motor_velocity_msg.data = cmd_left_velocity;
+        right_motor_velocity_msg.data = cmd_right_velocity;
 
-            ROS_INFO("Sending vels to hardware : L = %f \tR = %f", cmd_left_velocity, cmd_right_velocity);
+        ROS_INFO("Sending vels to hardware : L = %f \tR = %f", cmd_left_velocity, cmd_right_velocity);
 
-            // Publish the commands to the motors
-            pub_left_motor_velocity_.publish(left_motor_velocity_msg);
-            pub_right_motor_velocity_.publish(right_motor_velocity_msg);
+        // Publish the commands to the motors
+        pub_left_motor_velocity_.publish(left_motor_velocity_msg);
+        pub_right_motor_velocity_.publish(right_motor_velocity_msg);
 
-            last_left_velocity = cmd_left_velocity;
-            last_right_velocity = cmd_right_velocity;
-        }
 
     
     }
