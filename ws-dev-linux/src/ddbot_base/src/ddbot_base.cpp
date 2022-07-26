@@ -17,8 +17,12 @@ int main(int argc, char *argv[])
     // Create an instance of the controller manager and pass it the robot, so that it can handle its resources.
     controller_manager::ControllerManager cm(&ddbot);
 
-    // 1 Hz rate
-    ros::Rate rate(1.0); 
+    // Pour eviter que le demarrage du controlleur bloque la boucle principale
+    ros::AsyncSpinner spinner(1);
+    spinner.start();
+
+    // Hz rate
+    ros::Rate rate(50.0); 
 
     ros::Time last_time = ros::Time::now();
     rate.sleep();
@@ -38,8 +42,6 @@ int main(int argc, char *argv[])
 
         // Write the commands to the robot
         ddbot.writeToHardware();
-
-        ros::spinOnce();
 
         rate.sleep();
     }
