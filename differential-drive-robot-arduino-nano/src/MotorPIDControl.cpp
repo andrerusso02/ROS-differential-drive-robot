@@ -5,6 +5,19 @@
 #include <PID_V1.h>
 
 
+void printForDebug(double cmd_vel, double input_velocity, double output, double pwm)
+{
+    Serial.print("cmd_vel: ");
+    Serial.print(cmd_vel);
+    Serial.print("\tinput_velocity: ");
+    Serial.print(input_velocity);
+    Serial.print("\toutput: ");
+    Serial.print(output);
+    Serial.print("\tpwm: ");
+    Serial.println(pwm);
+}
+
+
 MotorPIDControl::MotorPIDControl(double* cmd_vel, Motor* motor, double* input_velocity)
 {
     this->motor = motor;
@@ -29,6 +42,8 @@ void MotorPIDControl::spinOnce()
          pid->SetMode(AUTOMATIC);   
     }
     this->pid->Compute();
-    int pwm = output / RobotModel::maxVelocity * 255.0;
+    int pwm = output / PIDConfig::max_output * 255.0;
     this->motor->rotate(pwm);
+
+    //printForDebug(*cmd_vel, *input_velocity, output, pwm);
 }

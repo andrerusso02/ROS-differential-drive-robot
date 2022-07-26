@@ -9,4 +9,4 @@ extern std_msgs::Int16 ROS_cnt_ticks_right;
 
 void ROS_init();
 
-void publish_encoders_ticks(volatile long *nb_ticks_encoder_l, volatile long *nb_ticks_encoder_r);
+void publish_encoders_velocities(double *vel_left, double *vel_right);
