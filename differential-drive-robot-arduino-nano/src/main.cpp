@@ -21,7 +21,8 @@ void setup() {
 
 void loop() {
 
-  // update tick count for ROS
+  ENCODERS_update_current_velocity_measures();
+
   publish_encoders_velocities(&ENCODERS_global_vars::current_velocity_left, &ENCODERS_global_vars::current_velocity_right);
 
   ROS_nodeHandle.spinOnce(); // calls the callback waiting to be called

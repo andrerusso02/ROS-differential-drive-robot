@@ -29,19 +29,22 @@ void Motor::rotate(int pwm)
     {
         digitalWrite(dir1, HIGH);
         digitalWrite(dir2, LOW);
+        analogWrite(enable, abs(pwm));
         *current_direction = 1;
     }
     else if (pwm < 0)
     {
         digitalWrite(dir1, LOW);
         digitalWrite(dir2, HIGH);
+        analogWrite(enable, abs(pwm));
         *current_direction = -1;
     }
     else
     {
         digitalWrite(dir1, LOW);
         digitalWrite(dir2, LOW);
+        analogWrite(enable, HIGH);
     }
-    analogWrite(enable, abs(pwm));
+    
 }
 
