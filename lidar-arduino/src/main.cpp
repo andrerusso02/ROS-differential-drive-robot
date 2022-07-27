@@ -2,7 +2,7 @@
 
 #include <SoftwareSerial.h>   //header file of software serial port
 
-SoftwareSerial Serial1(7, 8); //define software serial port name as Serial1 and define pin2 as RX & pin3 as TX
+//SoftwareSerial Serial1(7, 8); //define software serial port name as Serial1 and define pin2 as RX & pin3 as TX
 
 #include <TFMPlus.h>  // Include TFMini Plus Library v1.5.0
 TFMPlus tfmP;         // Create a TFMini Plus object
@@ -33,8 +33,8 @@ void setup()
 
 
     // Set baud rate
-    Serial.print( "Set baud rate to 9600 baud: ");
-    if( tfmP.sendCommand( SET_BAUD_RATE, BAUD_9600))
+    Serial.print( "Set baud rate : ");
+    if( tfmP.sendCommand( SET_BAUD_RATE, BAUD_115200))
     {
       Serial.println( "succès.");
     }
@@ -52,7 +52,7 @@ void setup()
 
     // - - Set the data frame-rate to 20Hz - - - - - - - -
     Serial.print( "Data-Frame rate: ");
-    if( tfmP.sendCommand( SET_FRAME_RATE, FRAME_20))
+    if( tfmP.sendCommand( SET_FRAME_RATE, FRAME_1000))
     {
       Serial.println( "20Hz");
     }
@@ -86,7 +86,7 @@ void setup()
     // - - - - - - - - - - - - - - - - - - - - - - - -    
 */
 
-  delay(500);            // And wait for half a second.
+  delay(1000);            // And wait for half a second.
 }
 
 // Initialize variables
@@ -97,10 +97,17 @@ int16_t tfTemp = 0;    // Internal temperature of Lidar sensor chip
 long cntSuccess = 0;
 long cntEchec = 0;
 
+long lastTime = 0;
+
+
 // Use the 'getData' function to pass back device data.
 void loop()
 {
     //delay(50);   // Loop delay to match the 20Hz data frame rate
+
+    if(lastTime==0){
+      lastTime = millis();
+    }
 
     if( tfmP.getData( tfDist, tfFlux, tfTemp)) // Get data from the device.
     {
@@ -119,9 +126,15 @@ void loop()
       //tfmP.printFrame();  // display the error and HEX dataa
       cntEchec++;
     }
-    Serial.print("Success = ");
-    Serial.print(cntSuccess);
-    Serial.print(", \tEchec = ");
-    Serial.print(cntEchec);
+
+    double freq = 1000.0/(double)(millis() - lastTime);
+    lastTime = millis();
+
+    // Serial.print("Success = ");
+    // Serial.print(cntSuccess);
+    // Serial.print(", \tEchec = ");
+    // Serial.print(cntEchec);
+    // Serial.print(", \tFreq = ");
+    Serial.print(freq);
     Serial.println("");
 }
