@@ -3,58 +3,125 @@
 #include <SoftwareSerial.h>   //header file of software serial port
 
 SoftwareSerial Serial1(7, 8); //define software serial port name as Serial1 and define pin2 as RX & pin3 as TX
- 
-int dist;                     //actual distance measurements of LiDAR
-int strength;                 //signal strength of LiDAR
-int check;                    //save check value
-int i;
-int uart[9];                   //save data measured by LiDAR
-const int HEADER = 0x59;      //frame header of data package*
 
-long last_time = 0;            //last time of data package
- 
- 
+#include <TFMPlus.h>  // Include TFMini Plus Library v1.5.0
+TFMPlus tfmP;         // Create a TFMini Plus object
+
+
+                                    
 void setup()
 {
-  Serial.begin(115200);         //set bit rate of serial port connecting Arduino with computer
-  Serial1.begin(9600);      //set bit rate of serial port connecting LiDAR with Arduino
-}
- 
- 
-void loop() {
-  if (Serial1.available())                //check if serial port has data input
-  {
-    if (Serial1.read() == HEADER)        //assess data package frame header 0x59
+    Serial.begin( 115200);   // Intialize terminal serial port
+    delay(20);               // Give port time to initalize
+    //printf("\r\nTFMPlus Library Example - 10SEP2021\r\n");  // say 'hello'
+    Serial.println("TFMPlus Library Example - 10SEP2021");  // say 'hello'
+
+    Serial1.begin( 115200);  // Initialize TFMPLus device serial port.
+    delay(20);               // Give port time to initalize
+    tfmP.begin( &Serial1);   // Initialize device library object and...
+                             // pass device serial port to the object.
+    // Send some example commands to the TFMini-Plus
+    // - - Perform a system reset - - - - - - - - - - -
+    // printf( "Soft reset: ");
+    // if( tfmP.sendCommand( SOFT_RESET, 0))
+    // {
+    //     printf( "passed.\r\n");
+    // }
+    // else tfmP.printReply();
+  
+    delay(500);  // added to allow the System Rest enough time to complete
+
+
+    // Set baud rate
+    Serial.print( "Set baud rate to 9600 baud: ");
+    if( tfmP.sendCommand( SET_BAUD_RATE, BAUD_9600))
     {
-      uart[0] = HEADER;
-      if (Serial1.read() == HEADER)      //assess data package frame header 0x59
-      {
-        double freq = 1000. / (double)(millis () - last_time); //calculate time between two data package
-        uart[1] = HEADER;
-        for (i = 2; i < 9; i++)         //save data in array
-        {
-          uart[i] = Serial1.read();
-        }
-        check = uart[0] + uart[1] + uart[2] + uart[3] + uart[4] + uart[5] + uart[6] + uart[7];
-        if (uart[8] == (check & 0xff))        //verify the received data as per protocol
-        {
-          dist = uart[2] + uart[3] * 256;     //calculate distance value
-          strength = uart[4] + uart[5] * 256; //calculate signal strength value
-          Serial.print("dist = ");
-          Serial.print(dist);                 //output measure distance value of LiDAR
-          //Serial.print('\t');
-          //Serial.print("strength = ");
-          //Serial.print(strength);             //output signal strength value
-          Serial.print('\t');
-          Serial.print("freq = ");
-          Serial.println(freq);               //output frequency value
-          last_time = millis();
-        }
-        else
-        {
-          Serial.println("data error");
-        }
-      }
+      Serial.println( "succès.");
     }
-  }
+    else
+    {
+      Serial.println( "failed.\r\n");
+      tfmP.printReply();
+    }
+
+    // delay(500);
+    // Serial1.flush();
+    // Serial1.begin( 9600);
+    // delay(500);
+
+
+    // - - Set the data frame-rate to 20Hz - - - - - - - -
+    Serial.print( "Data-Frame rate: ");
+    if( tfmP.sendCommand( SET_FRAME_RATE, FRAME_20))
+    {
+      Serial.println( "20Hz");
+    }
+    else
+    {
+      Serial.println( "failed");
+      tfmP.printReply();
+    }
+    // - - - - - - - - - - - - - - - - - - - - - - - -
+
+/*  // - - - - - - - - - - - - - - - - - - - - - - - -  
+    // The next two commands may be used to switch the device 
+    // into I2C mode.  This sketch will no longer receive UART
+    // (serial) data.  The 'TFMPI2C_example' sketch in the 
+    // TFMPI2C Library can be used to switch the device back
+    // to UART mode.
+    // Don't forget to switch the cables, too.
+    // - - - - - - - - - - - - - - - - - - - - - - - -
+    printf( "Set I2C Mode: ");
+    if( tfmP.sendCommand( SET_I2C_MODE, 0))
+    {
+        printf( "mode set.\r\n");
+    }
+    else tfmP.printReply();
+    printf( "Save settings: ");
+    if( tfmP.sendCommand( SAVE_SETTINGS, 0))
+    {
+        printf( "saved.\r\n");
+    }
+    else tfmP.printReply();
+    // - - - - - - - - - - - - - - - - - - - - - - - -    
+*/
+
+  delay(500);            // And wait for half a second.
+}
+
+// Initialize variables
+int16_t tfDist = 0;    // Distance to object in centimeters
+int16_t tfFlux = 0;    // Strength or quality of return signal
+int16_t tfTemp = 0;    // Internal temperature of Lidar sensor chip
+
+long cntSuccess = 0;
+long cntEchec = 0;
+
+// Use the 'getData' function to pass back device data.
+void loop()
+{
+    //delay(50);   // Loop delay to match the 20Hz data frame rate
+
+    if( tfmP.getData( tfDist, tfFlux, tfTemp)) // Get data from the device.
+    {
+      // Serial.print("Dist =  ");
+      // Serial.print(tfDist);
+      // Serial.print(" cm, \tFlux = ");
+      // Serial.print(tfFlux);
+      // Serial.print(", \tTemp = ");
+      // Serial.print(tfTemp);
+      // Serial.println("C");
+      cntSuccess++;
+  
+    }
+    else                  // If the command fails...
+    {
+      //tfmP.printFrame();  // display the error and HEX dataa
+      cntEchec++;
+    }
+    Serial.print("Success = ");
+    Serial.print(cntSuccess);
+    Serial.print(", \tEchec = ");
+    Serial.print(cntEchec);
+    Serial.println("");
 }
