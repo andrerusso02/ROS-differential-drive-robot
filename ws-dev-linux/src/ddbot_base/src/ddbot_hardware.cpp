@@ -54,7 +54,7 @@
 
     }
 
-    void DdbotHardware::writeToHardware()
+    void DdbotHardware::write(const ros::Time& time, const ros::Duration& period)
     {
 
         double cmd_left_velocity = joints_[0].velocity_command;
@@ -72,7 +72,7 @@
         pub_right_motor_velocity_.publish(right_motor_velocity_msg);
     }
 
-    void DdbotHardware::readFromHardware()
+    void DdbotHardware::read(const ros::Time&  time, const ros::Duration& period)
     {
         joints_[0].velocity = left_encoder_vel_;
         joints_[1].velocity = right_encoder_vel_;

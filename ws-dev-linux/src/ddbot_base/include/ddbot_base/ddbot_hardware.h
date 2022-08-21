@@ -29,11 +29,9 @@ class DdbotHardware : public hardware_interface::RobotHW
 
         void test();
 
-        void readFromHardware();
+        void read(const ros::Time&  time, const ros::Duration& period);
 
-        void writeToHardware();
-
-
+        void write(const ros::Time& time, const ros::Duration& period);
 
     private:
 
@@ -57,6 +55,7 @@ class DdbotHardware : public hardware_interface::RobotHW
         void rightVelCallback(const std_msgs::Float32::ConstPtr& msg);
         void leftPosCallback(const std_msgs::Float32::ConstPtr& msg);
         void rightPosCallback(const std_msgs::Float32::ConstPtr& msg);
+        
         // variables for encoders callbacks
         _Float32 left_encoder_vel_;
         _Float32 right_encoder_vel_;

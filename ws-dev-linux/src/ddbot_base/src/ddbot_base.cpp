@@ -31,17 +31,18 @@ int main(int argc, char *argv[])
     // Blocks until shutdown signal recieved
     while (ros::ok())
     {
-        
-        // Read the current state of the robot from the hardware
-        ddbot.readFromHardware();
 
+        // Calculate the time elapsed since the last loop
         ros::Duration period = ros::Time::now() - last_time;
 
+        // Read the current state of the robot from the hardware
+        ddbot.read(ros::Time::now(), period);
+        
         // Update the controller manager
         cm.update(ros::Time::now(), period);
 
         // Write the commands to the robot
-        ddbot.writeToHardware();
+        ddbot.write(ros::Time::now(), period);
 
         rate.sleep();
     }
