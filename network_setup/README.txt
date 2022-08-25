@@ -1,0 +1,5 @@
+# Network configuration for Raspberry Pi + workstation
+
+## Raspberry Pi's hostname : ddrobot
+SSH  : ```ssh ubuntu@ddrobot```
+Change hostname : https://www.pragmaticlinux.com/2021/05/how-to-change-the-hostname-of-your-raspberry-pi/
