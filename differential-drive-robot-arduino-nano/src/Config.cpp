@@ -2,14 +2,14 @@
 
 namespace Pins
 {
-    int enableR = 10;
-    int dir1R = 11;
-    int dir2R = 12;
+    int enableR = 12;
+    int dir1R = 10;
+    int dir2R = 11;
     int encoderR = 2;
 
-    int enableL = 9;
-    int dir1L = 8;
-    int dir2L = 7;
+    int enableL = 7;
+    int dir1L = 9;
+    int dir2L = 8;
     int encoderL = 3;
 }
 

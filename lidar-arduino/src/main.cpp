@@ -33,16 +33,16 @@ void setup()
 
 
     // Set baud rate
-    Serial.print( "Set baud rate : ");
-    if( tfmP.sendCommand( SET_BAUD_RATE, BAUD_115200))
-    {
-      Serial.println( "succès.");
-    }
-    else
-    {
-      Serial.println( "failed.\r\n");
-      tfmP.printReply();
-    }
+    // Serial.print( "Set baud rate : ");
+    // if( tfmP.sendCommand( SET_BAUD_RATE, BAUD_115200))
+    // {
+    //   Serial.println( "succès.");
+    // }
+    // else
+    // {
+    //   Serial.println( "failed.\r\n");
+    //   tfmP.printReply();
+    // }
 
     // delay(500);
     // Serial1.flush();
@@ -51,16 +51,30 @@ void setup()
 
 
     // - - Set the data frame-rate to 20Hz - - - - - - - -
-    Serial.print( "Data-Frame rate: ");
-    if( tfmP.sendCommand( SET_FRAME_RATE, FRAME_1000))
-    {
-      Serial.println( "20Hz");
-    }
-    else
-    {
-      Serial.println( "failed");
-      tfmP.printReply();
-    }
+    //  Serial.print( "Data-Frame rate: ");
+    // if( tfmP.sendCommand( SET_FRAME_RATE, FRAME_1000))
+    // {
+    //   Serial.println( "20Hz");
+    // }
+    // else
+    // {
+    //   Serial.println( "failed");
+    //   tfmP.printReply();
+    // }
+    // delay(500);
+    // // save paramerters
+    // Serial.print( "Save parameters: ");
+    // if( tfmP.sendCommand( SAVE_SETTINGS, 0))
+    // {
+    //   Serial.println( "passed");
+    // }
+    // else
+    // {
+    //   Serial.println( "failed");
+    //   tfmP.printReply();
+    // }
+    // delay(1000);
+  
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
 /*  // - - - - - - - - - - - - - - - - - - - - - - - -  
@@ -111,14 +125,14 @@ void loop()
 
     if( tfmP.getData( tfDist, tfFlux, tfTemp)) // Get data from the device.
     {
-      // Serial.print("Dist =  ");
-      // Serial.print(tfDist);
-      // Serial.print(" cm, \tFlux = ");
-      // Serial.print(tfFlux);
-      // Serial.print(", \tTemp = ");
-      // Serial.print(tfTemp);
-      // Serial.println("C");
-      cntSuccess++;
+      Serial.print("Dist =  ");
+      Serial.print(tfDist);
+      Serial.print(" cm, \tFlux = ");
+      Serial.print(tfFlux);
+      Serial.print(", \tTemp = ");
+      Serial.print(tfTemp);
+      Serial.println("C");
+       cntSuccess++;
   
     }
     else                  // If the command fails...
@@ -135,6 +149,6 @@ void loop()
     // Serial.print(", \tEchec = ");
     // Serial.print(cntEchec);
     // Serial.print(", \tFreq = ");
-    Serial.print(freq);
-    Serial.println("");
+    // Serial.print(freq);
+    // Serial.println("");
 }

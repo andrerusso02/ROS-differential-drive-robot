@@ -31,8 +31,8 @@ void ENCODERS_right_interrupt_callback()
 
 void ENCODERS_init_callbacks(int pinL, int pinR)
 {
-    pinMode(pinL, INPUT);
-    pinMode(pinR, INPUT);
+    pinMode(pinL, INPUT_PULLUP);
+    pinMode(pinR, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(pinL), &ENCODERS_left_interrupt_callback, RISING);
     attachInterrupt(digitalPinToInterrupt(pinR), &ENCODERS_right_interrupt_callback, RISING);
 }
