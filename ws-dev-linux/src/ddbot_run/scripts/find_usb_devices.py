@@ -25,8 +25,8 @@ if __name__ == '__main__':
 
     peripherials = serial.tools.list_ports.comports(include_links=False)
     for peripherial in peripherials:
+        port = "/dev/" + peripherial.name
         if peripherial.description == "USB2.0-Serial":
-            port = "/dev/" + peripherial.name
             # connect to see if arduino responds to WHOAMI
             ser = serial.Serial(port, 115200, timeout=1.0)
             time.sleep(2) # wait for Arduino to reboot
@@ -55,7 +55,7 @@ if __name__ == '__main__':
                 response = error
                 break
     
-    if response.count('\n'):
-        print(response, end=None)
+    if arduino_wheels_found and arduino_lidar_found and lidar_sensor_found:
+        print(response[:-1], end=None) # don't print last \n
     else:
         print(error)
