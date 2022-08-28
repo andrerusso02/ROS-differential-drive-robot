@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import serial
 import serial.tools.list_ports
 import time
@@ -66,5 +68,6 @@ if __name__ == '__main__':
         with open(SCRIPT_PATH, "w") as f:
             f.write(text_to_write)
             os.system("chmod +x " + SCRIPT_PATH)
-        print("Please run :\n\n\t source " + SCRIPT_PATH + "\n")
+        print("Please run one of these commands:\n\tsource " + SCRIPT_PATH)
+        print("\tsource $(rospack find ddbot_run)/scripts/" + os.path.basename(SCRIPT_PATH))
 
