@@ -1,7 +1,7 @@
 # Differential Drive Robot
 
 
-## Attacher / detacher une carte à WSL
+## Attach / detach a USB peripherial to WSL
 ```usbipd wsl list```
 ```usbipd wsl attach --busid 1-2```
 ```usbipd wsl detach --busid 1-2```
@@ -17,3 +17,13 @@ Change hostname : https://www.pragmaticlinux.com/2021/05/how-to-change-the-hostn
 
 ### Run this on each machine to share roscore
 ```export ROS_MASTER_URI=http://ddbot:11311```
+
+## Before launching robot nodes :
+
+Run ```$(rospack find ddbot_run)/scripts/find_usb_devices.py```
+
+And source ```$(rospack find ddbot_run)/scripts/set_usb_ports.bash```
+
+Adding this to .bashrc may be convenient : 
+
+```test -f $(rospack find ddbot_run)/scripts/set_usb_ports.bash  && source $(rospack find ddbot_run)/scripts/set_usb_ports.bash```
