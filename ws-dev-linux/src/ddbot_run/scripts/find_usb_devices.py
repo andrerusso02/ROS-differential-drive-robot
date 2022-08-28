@@ -4,6 +4,7 @@ import serial
 import serial.tools.list_ports
 import time
 import os
+import rospy
 
 # This script finds the ports of the 3 USB peripherials of the robot.
 # It writes a scripts setting them as environnment variables and executes it.
@@ -11,9 +12,10 @@ import os
 WHOAMI = 0xFF # used by lidar's arduino but not wheels motors arduino
 ID = 0xFE # lidar's arduino answer to WHOAMI
 
-ENV_ARDUINO_WHEELS = "ROS_PORT_ARDUINO_LIDAR"
-ENV_ARDUINO_LIDAR = "ROS_PORT_ARDUINO_WHEELS"
-ENV_LIDAR_SENSOR = "ROS_PORT_LIDAR_SENSOR"
+NS = "/peripherials_ports/"
+ARDUINO_WHEELS = "arduino_wheels"
+ARDUINO_LIDAR = "arduino_lidar"
+LIDAR_SENSOR = "lidar_sensor"
 
 SCRIPT_PATH = os.path.realpath(os.path.dirname(__file__)) + "/set_usb_ports.bash"
 
@@ -22,10 +24,6 @@ if __name__ == '__main__':
     arduino_wheels_found = False
     arduino_lidar_found = False
     lidar_sensor_found = False
-
-    error = "Port(s) not found"
-
-    text_to_write = "#!/bin/sh\n"
 
     print("Searching for USB ports...")
 
@@ -42,32 +40,24 @@ if __name__ == '__main__':
             if res == ID.to_bytes(1, 'little'): # motor Arduino found !
                 if not arduino_lidar_found:
                     arduino_lidar_found = True
-                    text_to_write += "export " + ENV_ARDUINO_WHEELS + "=\"" + port + "\"\n"
-                    print(ENV_ARDUINO_WHEELS + "=" + port)
+                    rospy.set_param(NS + ARDUINO_LIDAR, port)
+                    print("Set param " + NS + ARDUINO_LIDAR + "=" + port)
                 else :
-                    print("Error : Another peripherial at " + port + " matches description for " + ENV_ARDUINO_WHEELS)
+                    print("Error : Another peripherial at " + port + " matches description for " + ARDUINO_LIDAR)
             else:
                 if not arduino_wheels_found:
                     arduino_wheels_found = True
-                    text_to_write += "export " + ENV_ARDUINO_LIDAR + "=\"" + port + "\"\n"
-                    print(ENV_ARDUINO_LIDAR + "=" + port)
+                    rospy.set_param(NS + ARDUINO_WHEELS, port)
+                    print("Set param " + NS + ARDUINO_WHEELS + "=" + port)
                 else :
-                    print("Error : Another peripherial at " + port + " matches description for " + ENV_ARDUINO_LIDAR)
+                    print("Error : Another peripherial at " + port + " matches description for " + ARDUINO_WHEELS)
         elif peripherial.description == "USB Serial":
             if not lidar_sensor_found:
                 lidar_sensor_found = True
-                text_to_write += "export " + ENV_LIDAR_SENSOR + "=\"" + port + "\"\n"
-                print(ENV_LIDAR_SENSOR + "=" + port)
+                rospy.set_param(NS + LIDAR_SENSOR, port)
+                print("Set param " + NS + LIDAR_SENSOR + "=" + port)
             else :
-                print("Error : Another peripherial at " + port + " matches description for " + ENV_LIDAR_SENSOR)
+                print("Error : Another peripherial at " + port + " matches description for " + LIDAR_SENSOR)
     
-    if not arduino_wheels_found and not arduino_lidar_found and not lidar_sensor_found:
-        print("No peripherials were found")
-    else:
-        print("Writing script setting these environnment variables at " + SCRIPT_PATH)
-        with open(SCRIPT_PATH, "w") as f:
-            f.write(text_to_write)
-            os.system("chmod +x " + SCRIPT_PATH)
-        print("Please run one of these commands:\n\tsource " + SCRIPT_PATH)
-        print("\tsource $(rospack find ddbot_run)/scripts/" + os.path.basename(SCRIPT_PATH))
+    print("Done!")
 
