@@ -27,3 +27,8 @@ And source ```$(rospack find ddbot_run)/scripts/set_usb_ports.bash```
 Adding this to .bashrc may be convenient : 
 
 ```test -f $(rospack find ddbot_run)/scripts/set_usb_ports.bash  && source $(rospack find ddbot_run)/scripts/set_usb_ports.bash```
+
+## Setup SSH RSA keys to use launch files to run nodes on distant robot
+https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1804-fr
+
+And place commands to init ROS in a file ```~/setup_ros.bash``` instead of ```~/.bashrc```

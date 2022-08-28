@@ -7,7 +7,7 @@
         name="robot"
         address="ddbot"
         user="ubuntu"
-        env-loader="/home/ubuntu/.bashrc"
+        env-loader="/home/ubuntu/setup_ros.bash"
         default="true"
     />
     
