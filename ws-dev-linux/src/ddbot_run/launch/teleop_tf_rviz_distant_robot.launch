@@ -11,6 +11,6 @@
         default="true"
     />
     
-    <include file="$(find ddbot_control)/launch/ddbot_control.launch" machine="robot"/>
+    <include file="$(find ddbot_control)/launch/ddbot_control.launch"/>
 
 </launch>
