@@ -1,11 +1,13 @@
- <launch>
- 
-   <node name="serial_interface" pkg="rosserial_python" type="serial_node.py"/>
+<launch>
 
-   <node name="ddbot_base"  pkg="ddbot_base" type="ddbot_base"/>
+  <arg name="port_arduino_wheels"/>
 
-   <rosparam file="$(find ddbot_control)/config/ddbot_control.yaml" />
+  <node name="serial_interface" pkg="rosserial_python" type="serial_node.py" args="$(arg port_arduino_wheels)"/>
 
-   <node name="ddbot_base_controler"  pkg="controller_manager" type="spawner" args="mobile_base_controller" />
+  <node name="ddbot_base"  pkg="ddbot_base" type="ddbot_base"/>
 
- </launch>
+  <rosparam file="$(find ddbot_control)/config/ddbot_control.yaml" />
+
+  <node name="ddbot_base_controler"  pkg="controller_manager" type="spawner" args="mobile_base_controller" />
+
+</launch>
