@@ -39,20 +39,9 @@ if __name__ == '__main__':
 
     rospy.init_node('lidar_laserscan_publisher', anonymous=True)
 
-    rospy.loginfo("LidarLaserscanPublisher node started with namespace %s", namespace)
-
-    # get params from parameter server
-    try:
-        port_lidar_sensor = rospy.get_param(namespace + "/port_lidar_sensor") # rad/s
-        port_motor = rospy.get_param(namespace + "/port_motor") # rad : offset from hall sensor
-        speed = rospy.get_param(namespace + "/speed")
-        zero_pos = rospy.get_param(namespace + "/zero_position")
-        lidar_frame_id = rospy.get_param(namespace + "/lidar_frame_id")
-    except Exception as e:
-        rospy.logerr("Parameters not found, aborting..." + str(e))
-        time.sleep(1.0) # wait for log to be published
-        rospy.signal_shutdown("Parameters not found")
-        exit()
+    # get ports from parameter server
+    port_lidar_sensor = rospy.get_param('~port_lidar_sensor', None)
+    port_motor = rospy.get_param('~port_motor', None)
 
     rospy.loginfo("Started lidar_laserscan_publisher with parameters : speed=" + str(speed) + " zero_pos=" + str(zero_pos) + " port_lidar_sensor=" + str(port_lidar_sensor) + " port_motor=" + str(port_motor) + " lidar_frame_id=" + lidar_frame_id)
 
