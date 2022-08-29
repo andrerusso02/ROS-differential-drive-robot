@@ -47,7 +47,11 @@ if __name__ == '__main__':
         port_motor = rospy.get_param(namespace + "/port_motor") # rad : offset from hall sensor
         speed = rospy.get_param(namespace + "/speed")
         zero_pos = rospy.get_param(namespace + "/zero_position")
+<<<<<<< HEAD
         lidar_frame_id = rospy.get_param(namespace + "/frame_id")
+=======
+        lidar_frame_id = rospy.get_param(namespace + "/lidar_frame_id")
+>>>>>>> d1dc0bfb54b33a534bf8e3b92da9be640581435e
     except Exception as e:
         rospy.logerr("Parameters not found, aborting..." + str(e))
         time.sleep(1.0) # wait for log to be published
