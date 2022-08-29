@@ -38,19 +38,17 @@ if __name__ == '__main__':
     else:
         speed = float(rospy.myargv()[1])
         zero_pos = float(rospy.myargv()[2])
-    
-    # get lidar sensor port from parameter server
-    port_lidar_sensor = rospy.get_param('~port_lidar_sensor', None)
-    # get motor port from parameter server
-    port_motor = rospy.get_param('~port_motor', None)
-
-
-    lidar = Lidar(port_lidar_sensor, port_motor)
-    lidar.start(speed, zero_pos)
 
     rospy.init_node('lidar_laserscan_publisher', anonymous=True)
 
+    # get ports from parameter server
+    port_lidar_sensor = rospy.get_param('~port_lidar_sensor', None)
+    port_motor = rospy.get_param('~port_motor', None)
+
     rospy.loginfo("Started lidar_laserscan_publisher with parameters : speed=" + str(speed) + " zero_pos=" + str(zero_pos) + " port_lidar_sensor=" + str(port_lidar_sensor) + " port_motor=" + str(port_motor))
+
+    lidar = Lidar(port_lidar_sensor, port_motor)
+    lidar.start(speed, zero_pos)
 
     pub_laserscan = rospy.Publisher('lidar_laserscan', LaserScan, queue_size=10)
 
