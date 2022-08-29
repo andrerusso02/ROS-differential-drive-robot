@@ -67,12 +67,12 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
         try:
-            distances = lidar.get_measures_set()
+            measures = lidar.get_measures_set()
         except serial.serialutil.SerialException:
             if(rospy.is_shutdown()):
                 break
         t_now = rospy.Time.now()
-        msg = build_laserscan_msg(distances, t_now - t_last, lidar_frame_id)
+        msg = build_laserscan_msg(measures, t_now - t_last, lidar_frame_id)
         pub_laserscan.publish(msg)
         t_last = t_now
         if(rospy.is_shutdown()):

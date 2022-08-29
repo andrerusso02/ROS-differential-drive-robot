@@ -27,14 +27,14 @@ class Lidar:
     def get_measures_set(self): # waitq for revolution completed
         status = self.__motor.wait_for_incoming_message()
         if status == Motor.Status.REVOLUTION_COMPLETED:
-            distances  = []
+            measures  = []
             s = self.__measures_queue.qsize()
             for i in range(0, s):
                 measure = self.__measures_queue.get()
-                measure.distance = measure.distance / 10.0 - self.__distance_mirror
-                distances.append(measure)
+                measure.distance = measure.distance / 100.0 - self.__distance_mirror
+                measures.append(measure)
                 self.__measures_queue.task_done()
-            return distances
+            return measures
         elif status == Motor.Status.MOTOR_BLOCKED:
             rospy.logwarn("motor blocked")
             self.__restart()
