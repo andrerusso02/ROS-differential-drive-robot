@@ -25,7 +25,9 @@ if __name__ == '__main__':
     arduino_lidar_found = False
     lidar_sensor_found = False
 
-    print("Searching for USB ports...")
+    rospy.init_node('find_usb_devices', anonymous=True) # init_node needed for rospy.loginfo()
+
+    rospy.loginfo("Searching for USB ports...")
 
     peripherials = serial.tools.list_ports.comports(include_links=False)
     for peripherial in peripherials:
@@ -41,23 +43,23 @@ if __name__ == '__main__':
                 if not arduino_lidar_found:
                     arduino_lidar_found = True
                     rospy.set_param(NS + ARDUINO_LIDAR, port)
-                    print("Set param " + NS + ARDUINO_LIDAR + "=" + port)
+                    rospy.loginfo("Set param " + NS + ARDUINO_LIDAR + "=" + port)
                 else :
-                    print("Error : Another peripherial at " + port + " matches description for " + ARDUINO_LIDAR)
+                    rospy.logerr("Error : Another peripherial at " + port + " matches description for " + ARDUINO_LIDAR)
             else:
                 if not arduino_wheels_found:
                     arduino_wheels_found = True
                     rospy.set_param(NS + ARDUINO_WHEELS, port)
-                    print("Set param " + NS + ARDUINO_WHEELS + "=" + port)
+                    rospy.loginfo("Set param " + NS + ARDUINO_WHEELS + "=" + port)
                 else :
-                    print("Error : Another peripherial at " + port + " matches description for " + ARDUINO_WHEELS)
+                    rospy.logerr("Error : Another peripherial at " + port + " matches description for " + ARDUINO_WHEELS)
         elif peripherial.description == "USB Serial":
             if not lidar_sensor_found:
                 lidar_sensor_found = True
                 rospy.set_param(NS + LIDAR_SENSOR, port)
-                print("Set param " + NS + LIDAR_SENSOR + "=" + port)
+                rospy.loginfo("Set param " + NS + LIDAR_SENSOR + "=" + port)
             else :
-                print("Error : Another peripherial at " + port + " matches description for " + LIDAR_SENSOR)
+                rospy.logerr("Error : Another peripherial at " + port + " matches description for " + LIDAR_SENSOR)
     
-    print("Done!")
+    rospy.signal_shutdown("Clean exit: USB search completed!")
 

@@ -2,7 +2,7 @@ from tfminis import TFminiS
 from motor import Motor
 import threading
 from queue import Queue
-import time
+import rospy
 
 class Lidar:
     def __init__(self, port_tfmini=None, port_motor=None):
@@ -36,7 +36,7 @@ class Lidar:
                 self.__measures_queue.task_done()
             return distances
         elif status == Motor.Status.MOTOR_BLOCKED:
-            print("motor blocked")
+            rospy.logwarn("motor blocked")
             self.__restart()
             return self.get_measures_set()
 
@@ -68,7 +68,7 @@ class Lidar:
         self.__tfmini.serial.close()
         self.__motor.serial.close()
 
-        print("Threads stopped and serial ports closed properly") 
+        rospy.loginfo("Threads stopped and serial ports closed properly") 
         
 
 

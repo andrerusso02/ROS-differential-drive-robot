@@ -45,13 +45,12 @@ if __name__ == '__main__':
     port_motor = rospy.get_param('~port_motor', None)
 
 
-
     lidar = Lidar(port_lidar_sensor, port_motor)
     lidar.start(speed, zero_pos)
 
-    print("LiDAR started")
-
     rospy.init_node('lidar_laserscan_publisher', anonymous=True)
+
+    rospy.loginfo("Started lidar_laserscan_publisher with parameters : speed=" + str(speed) + " zero_pos=" + str(zero_pos) + " port_lidar_sensor=" + str(port_lidar_sensor) + " port_motor=" + str(port_motor))
 
     pub_laserscan = rospy.Publisher('lidar_laserscan', LaserScan, queue_size=10)
 
@@ -70,6 +69,6 @@ if __name__ == '__main__':
         pub_laserscan.publish(msg)
         t_last = t_now
         if(rospy.is_shutdown()):
-            print("shutdown")
+            rospy.loginfo("Shutdown lidar_laserscan_publisher")
 
 

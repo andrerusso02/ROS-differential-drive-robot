@@ -7,7 +7,7 @@
     {
 
 
-        ROS_INFO("Initializing ddbot Hardware Interface ...");
+        ROS_INFO("Initializing ddbot Hardware Interface ..."); // todo : find why it doesn't show in rqt_console
 
         // velocities in rad/s
 
@@ -65,7 +65,7 @@
         left_motor_velocity_msg.data = cmd_left_velocity;
         right_motor_velocity_msg.data = cmd_right_velocity;
 
-        ROS_INFO("Sending vels to hardware : L = %f \tR = %f", cmd_left_velocity, cmd_right_velocity);
+        //ROS_INFO("Sending vels to hardware : L = %f \tR = %f", cmd_left_velocity, cmd_right_velocity);
 
         // Publish the commands to the motors
         pub_left_motor_velocity_.publish(left_motor_velocity_msg);
