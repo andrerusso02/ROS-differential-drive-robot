@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
 from lidar import Lidar
 import time
 from sensor_msgs.msg import LaserScan
@@ -38,7 +37,7 @@ if __name__ == '__main__':
         zero_pos = 1.68
     else:
         speed = float(rospy.myargv()[1])
-        zero_pos = float(rospy.myargv()[1])
+        zero_pos = float(rospy.myargv()[2])
     
     # get lidar sensor port from parameter server
     port_lidar_sensor = rospy.get_param('~port_lidar_sensor', None)

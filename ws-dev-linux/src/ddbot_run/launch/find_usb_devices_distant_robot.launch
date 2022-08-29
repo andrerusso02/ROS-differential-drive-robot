@@ -8,6 +8,6 @@
         default="true"
     />
     
-    <node pkg="ddbot_run" type="find_usb_devices.py" name="find_usb_devices" output="screen"/>
+    <node pkg="ddbot_run" type="find_usb_devices.py" name="find_usb_devices"/>
 
 </launch>
