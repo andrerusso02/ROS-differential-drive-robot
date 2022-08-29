@@ -1,5 +1,9 @@
 <launch>
 
+    <param name="/lidar/zero_position" type="double" value="1.68"/>
+    <param name="/lidar/speed" type="double" value="12.555"/>
+    <param name="/lidar/frame_id" type="str" value="lidar_frame"/>
+
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/tf.rviz" required="true"/>
     <include file="$(find ddbot_teleop)/launch/teleop_keyboard.launch"/>
 
@@ -13,10 +17,9 @@
     
     <include file="$(find ddbot_control)/launch/ddbot_control.launch"/>
 
-    <arg name="speed" default="12.566" /> <!-- 4 revolutions per second -->
-    <node pkg="ros_lidar" type="lidar_laserscan_publisher.py" name="lidar_laserscan_publisher" args="$(arg speed)" required="true">
-        <remap from="~port_lidar_sensor" to="/peripherials_ports/lidar_sensor" />
-        <remap from="~port_motor" to="/peripherials_ports/arduino_lidar" />
+    <node pkg="ros_lidar" type="lidar_laserscan_publisher.py" name="lidar_laserscan_publisher" args="lidar" required="true">
+        <remap from="/lidar/port_lidar_sensor" to="/peripherials_ports/lidar_sensor" />
+        <remap from="/lidar/port_motor" to="/peripherials_ports/arduino_lidar" />
     </node>
 
 </launch>
