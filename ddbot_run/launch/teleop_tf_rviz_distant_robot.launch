@@ -1,0 +1,16 @@
+<launch>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/tf.rviz"/>
+    <include file="$(find ddbot_teleop)/launch/teleop_keyboard.launch"/>
+
+    <machine
+        name="robot"
+        address="ddbot"
+        user="ubuntu"
+        env-loader="/home/ubuntu/setup_ros.bash"
+        default="true"
+    />
+    
+    <include file="$(find ddbot_control)/launch/ddbot_control.launch"/>
+
+</launch>

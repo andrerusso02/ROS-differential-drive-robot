@@ -1,0 +1,13 @@
+<launch>
+
+    <machine
+        name="robot"
+        address="ddbot"
+        user="ubuntu"
+        env-loader="/home/ubuntu/setup_ros.bash"
+        default="true"
+    />
+    
+    <node pkg="ddbot_run" type="find_usb_devices.py" name="find_usb_devices"/>
+
+</launch>

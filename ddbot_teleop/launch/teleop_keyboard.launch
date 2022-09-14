@@ -1,0 +1,6 @@
+ <launch>
+
+    <remap from="/cmd_vel" to="/mobile_base_controller/cmd_vel"/>
+    <node name="ddbot_teleop_keyboard"  pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen" required="true"/>
+
+ </launch>

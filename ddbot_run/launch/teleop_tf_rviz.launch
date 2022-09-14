@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find ddbot_control)/launch/ddbot_control.launch" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/tf.rviz"/>
+    <include file="$(find ddbot_teleop)/launch/teleop_keyboard.launch" />
+</launch>
