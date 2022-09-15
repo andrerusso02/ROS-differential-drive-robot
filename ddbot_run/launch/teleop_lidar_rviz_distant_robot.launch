@@ -1,6 +1,6 @@
 <launch>
 
-    <param name="/lidar/zero_position" type="double" value="1.68"/>
+    <param name="/lidar/zero_position" type="double" value="3.5"/>
     <param name="/lidar/speed" type="double" value="12.555"/>
     <param name="/lidar/frame_id" type="str" value="base_footprint"/>
 
