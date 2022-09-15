@@ -1,0 +1,11 @@
+<launch>
+
+    <remap from="/scan" to="/lidar_laserscan"/>
+
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" required="true">
+        <remap from="~base_frame" to="/mobile_base_controller/base_frame_id" />
+        <remap from="~odom_frame" to="/mobile_base_controller/odom_frame_id" />
+    </node>
+
+
+</launch>

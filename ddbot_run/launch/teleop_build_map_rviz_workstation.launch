@@ -1,0 +1,8 @@
+<launch>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/mapping.rviz" required="true"/>
+
+    <include file="$(find ddbot_slam)/launch/build_map.launch"/>
+    <include file="$(find ddbot_run)/launch/teleop_laserscan_workstation.launch"/> 
+
+</launch>

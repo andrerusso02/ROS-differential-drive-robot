@@ -1,10 +1,9 @@
 <launch>
 
     <param name="/lidar/zero_position" type="double" value="3.5"/>
-    <param name="/lidar/speed" type="double" value="12.555"/>
+    <param name="/lidar/speed" type="double" value="10.0"/>
     <param name="/lidar/frame_id" type="str" value="base_footprint"/>
 
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/tf_lidar.rviz" required="true"/>
     <include file="$(find ddbot_teleop)/launch/teleop_keyboard.launch"/>
 
     <machine
