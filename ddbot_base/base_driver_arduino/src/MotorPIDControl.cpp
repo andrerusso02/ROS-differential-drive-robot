@@ -2,7 +2,7 @@
 #include "MotorPIDControl.h"
 
 #include <Arduino.h>
-#include <PID_V1.h>
+#include <PID_v1.h>
 
 
 void printForDebug(double cmd_vel, double input_velocity, double output, double pwm)

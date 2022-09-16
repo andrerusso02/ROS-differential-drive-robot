@@ -1,5 +1,8 @@
 # Differential Drive Robot
 
+## rosserial_arduino error workaround
+Check https://answers.ros.org/question/361930/rosserial-arduino-compilation-error-no-cstring/?answer=382803#post-id-382803 (Yash Sahu answer)
+
 
 ## Attach / detach a USB peripherial to WSL
 ```usbipd wsl list```

@@ -1,6 +1,6 @@
 #ifndef PIDCONTROL_H
 #define PIDCONTROL_H
-#include <PID_V1.h>
+#include <PID_v1.h>
 #include "Motor.h"
 #endif // PIDCONTROL_H
 

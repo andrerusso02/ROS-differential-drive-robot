@@ -24,7 +24,7 @@ namespace PIDConfig
     float ki = 5.0;
     float kd = 0.00;
 
-    float max_output = 3.0; // (on peut dire rad/s mais cela sert juste à avoir une sortie de pid à l'échelle de l'entrée) 
+    float max_output = 6.0; // (on peut dire rad/s mais cela sert juste à avoir une sortie de pid à l'échelle de l'entrée) 
     float min_command = 0.30;
 }
 
