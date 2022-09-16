@@ -15,7 +15,7 @@ namespace Pins
 
 namespace RobotModel
 {
-    double nbPulsesPerMotorRevelution = 200;
+    double nbPulsesPerMotorRevelution = 220;
 }
 
 namespace PIDConfig
