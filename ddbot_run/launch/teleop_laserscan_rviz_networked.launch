@@ -1,6 +1,6 @@
 <launch>
 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/tf_lidar.rviz" required="true"/>
-    <include file="$(find ddbot_run)/launch/teleop_laserscan_workstation.launch"/>
+    <include file="$(find ddbot_run)/launch/teleop_laserscan_networked.launch"/>
 
 </launch>
