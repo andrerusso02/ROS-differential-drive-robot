@@ -43,7 +43,7 @@ void Motor::rotate(int pwm)
     {
         digitalWrite(dir1, LOW);
         digitalWrite(dir2, LOW);
-        analogWrite(enable, HIGH);
+        analogWrite(enable, LOW);
     }
     
 }
