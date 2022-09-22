@@ -1,7 +1,8 @@
 <launch>
 
-    <param name="robot_description" command="$(find ddbot_description)/urdf/robot.urdf" />
+    <param name="robot_description" value="$(find ddbot_description)/urdf/robot.urdf" />
     
-    <node pkg="ddbot_run" type="find_usb_devices.py" name="find_usb_devices"/>
+      <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-z 1.0 -unpause -urdf -model ddbot -file $(find ddbot_description)/urdf/robot.urdf" respawn="false" output="screen" />
 
 </launch>
