@@ -1,0 +1,7 @@
+<launch>
+
+    <param name="robot_description" command="$(find ddbot_description)/urdf/robot.urdf" />
+    
+    <node pkg="ddbot_run" type="find_usb_devices.py" name="find_usb_devices"/>
+
+</launch>

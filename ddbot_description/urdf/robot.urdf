@@ -1,0 +1,75 @@
+<robot name="ddbot">
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.251 0.189 0.045"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0.0375 0 0.009"/> <!-- 9 mm from ground -->
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.251 0.189 0.045"/>
+            </geometry>
+            <origin rpy="0 0 0" xyz="0.0375 0 0.009"/>
+        </collision>
+        <inertial>
+            <mass value="0.9"/>
+            <inertia ixx="0.002747" ixy="0.0" ixz="0.0" iyy="0.004793" iyz="0.0" izz="0.007404"/> <!-- height = 3cm -->
+        </inertial>
+    </link>
+
+    <link name="left_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.016" radius="0.0254"/>
+            </geometry>
+            <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.016" radius="0.0254"/>
+            </geometry>
+            <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+        </collision>
+        <inertial>
+            <mass value="0.075"/>
+            <inertia ixx="0.0000137" ixy="0.0" ixz="0.0" iyy="0.00002419" iyz="0.0" izz="0.0000137"/> <!-- height = 3cm -->
+        </inertial>
+    </link>
+
+    <link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.016" radius="0.0254"/>
+            </geometry>
+            <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.016" radius="0.0254"/>
+            </geometry>
+            <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+        </collision>
+        <inertial>
+            <mass value="0.075"/>
+            <inertia ixx="0.0000137" ixy="0.0" ixz="0.0" iyy="0.00002419" iyz="0.0" izz="0.0000137"/> <!-- height = 3cm -->
+        </inertial>
+    </link>
+
+
+    <joint name="base_to_left_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel"/>
+        <origin xyz="0 0.103 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <joint name="base_to_right_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <origin xyz="0 -0.103 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+</robot>
