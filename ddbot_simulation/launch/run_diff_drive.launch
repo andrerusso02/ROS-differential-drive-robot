@@ -1,0 +1,10 @@
+<launch>
+
+    <rosparam command="load" file="$(find ddbot_simulation)/config/diff_drive_params.yaml"/>
+
+    <node name="ddbot_base_controler"  pkg="controller_manager" type="spawner" required="true"
+    args="mobile_base_controller"/>
+
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering"/>
+
+</launch>
