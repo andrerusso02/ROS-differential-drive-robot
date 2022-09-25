@@ -1,10 +1,24 @@
 <launch>
 
-    <node pkg="rosserial_python" type="serial_node.py" name="serial_node" required="true">
-    <remap from="~port" to="/peripherials_ports/arduino_wheels" />
-  </node>
+  <arg name="sim" default="false"/>
 
-  <node name="ddbot_base"  pkg="ddbot_base" type="ddbot_base" required="true"/>
+  <group unless="$(arg sim)">
+
+    <node pkg="rosserial_python" type="serial_node.py" name="serial_node" required="true">
+      <remap from="~port" to="/peripherials_ports/arduino_wheels" />
+    </node>
+
+    <node name="ddbot_base"  pkg="ddbot_base" type="ddbot_base" required="true"/>
+  </group>
+
+  <group if="$(arg sim)">
+
+    <param name="robot_description" textfile="$(find ddbot_description)/urdf/robot.urdf" />
+    
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-z 1.0 -unpause -urdf -model ddbot -param robot_description" respawn="false" output="screen" />
+  
+  </group>
 
   <rosparam file="$(find ddbot_control)/config/ddbot_control.yaml" />
 
