@@ -2,9 +2,12 @@
 
 <robot name="ddbot">
 
+    <!--<link name="base_link_dummy"/>-->
+
     <link name="base_link">
         <visual>
             <geometry>
+                <!--<mesh filename="/home/arusso/catkin_ws/src/ddbot/ddbot_description/meshes/body.stl" scale="0.01 0.01 0.01"/>-->
                 <box size="0.251 0.189 0.045"/>
             </geometry>
             <origin rpy="0 0 0" xyz="0.0375 0 0.009"/> <!-- 9 mm from ground -->
@@ -60,17 +63,23 @@
     </link>
 
 
+    <!--<joint name="dummy_joint" type="fixed">
+        <parent link="base_link_dummy"/>
+        <child link="base_link"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>-->
+
     <joint name="wheel_left_joint" type="continuous">
         <parent link="base_link"/>
         <child link="left_wheel"/>
-        <origin xyz="0 0.103 0"/>
+        <origin xyz="0 0.111 0"/>
         <axis xyz="0 1 0"/>
     </joint>
 
     <joint name="wheel_right_joint" type="continuous">
         <parent link="base_link"/>
         <child link="right_wheel"/>
-        <origin xyz="0 -0.103 0"/>
+        <origin xyz="0 -0.111 0"/>
         <axis xyz="0 1 0"/>
     </joint>
 
