@@ -2,9 +2,9 @@
 
     <arg name="sim" default="false"/>
     <arg name="no_remote" default="false"/>
-    <arg no_lidar="false"/>
+    <arg name="no_lidar" default="false"/>
 
-    <include file="$(find ddbot_control)/launch/ddbot_control.launch" args="sim:=$(arg sim) no_remote:=$(arg no_remote)"/>
+    <include file="$(find ddbot_control)/launch/ddbot_control.launch" pass_all_args="true"/>
 
     <group unless="$(arg no_lidar)">
         <node pkg="ros_lidar" type="lidar_laserscan_publisher.py" name="lidar_laserscan_publisher" args="lidar" required="true">

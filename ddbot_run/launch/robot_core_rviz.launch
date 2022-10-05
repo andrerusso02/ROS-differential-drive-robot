@@ -1,0 +1,9 @@
+<launch>
+    <arg name="sim" default="false"/>
+    <arg name="no_remote" default="false"/>
+    <arg name="no_lidar" default="false"/>
+
+    <include file="$(find ddbot_run)/launch/robot_core.launch" pass_all_args="true"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/robot_core.rviz" required="true"/>
+</launch>

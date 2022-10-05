@@ -6,26 +6,38 @@
   <param name="robot_description" textfile="$(find ddbot_description)/urdf/robot.urdf" />
   <rosparam file="$(find ddbot_control)/config/ddbot_control.yaml" />
 
-  <group unless="$(arg sim)">
-    <node pkg="rosserial_python" type="serial_node.py" name="serial_node" required="true">
-      <remap from="~port" to="/peripherials_ports/arduino_wheels" />
-    </node>
-    <node name="ddbot_base"  pkg="ddbot_base" type="ddbot_base" required="true"/>
+  <group if="$(arg sim)">
+    <node name="ddbot_base_controler"  pkg="controller_manager" type="spawner" args="mobile_base_controller" required="true"/>
   </group>
 
-  <node name="ddbot_base_controler"  pkg="controller_manager" type="spawner" args="mobile_base_controller" required="true"/>
+  <group unless="$(arg sim)">
 
-  <group unless="$(arg no_remote)">
-    <machine
+    <group if="$(arg no_remote)">
+      <node name="ddbot_base_controler"  pkg="controller_manager" type="spawner" args="mobile_base_controller" required="true"/>
+      <node name="ddbot_base"  pkg="ddbot_base" type="ddbot_base" required="true"/>
+      <node pkg="rosserial_python" type="serial_node.py" name="serial_node" required="true">
+        <remap from="~port" to="/peripherials_ports/arduino_wheels" />
+      </node>
+
+    </group>
+    <group unless="$(arg no_remote)">
+        <machine
           name="robot"
           address="ddbot"
           user="ubuntu"
           env-loader="/home/ubuntu/setup_ros.bash"
           default="never"
-    />
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" machine="robot"/>
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" machine="robot"/>
+      />
+      <node name="ddbot_base_controler"  pkg="controller_manager" type="spawner" args="mobile_base_controller" required="true" machine="robot"/>
+      <node name="ddbot_base"  pkg="ddbot_base" type="ddbot_base" required="true" machine="robot"/>
+      <node pkg="rosserial_python" type="serial_node.py" name="serial_node" required="true" machine="robot">
+        <remap from="~port" to="/peripherials_ports/arduino_wheels" />
+      </node>
+    </group>
   </group>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
 
 </launch>
