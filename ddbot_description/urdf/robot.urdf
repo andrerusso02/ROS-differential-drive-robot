@@ -7,10 +7,11 @@
     <link name="base_link">
         <visual>
             <geometry>
-                <!--<mesh filename="/home/arusso/catkin_ws/src/ddbot/ddbot_description/meshes/body.stl" scale="0.01 0.01 0.01"/>-->
-                <box size="0.251 0.189 0.045"/>
+                <mesh filename="package://ddbot_description/meshes/body.stl" scale="0.001 0.001 0.001"/>
+                <!--<mesh filename="package://urdf_tutorial/meshes/l_finger.dae"/>-->
+                <!--<box size="0.251 0.189 0.045"/>-->
             </geometry>
-            <origin rpy="0 0 0" xyz="0.0375 0 0.009"/> <!-- 9 mm from ground -->
+            <origin rpy="1.570796 0 0" xyz="0.0375 0 0"/> <!-- 9 mm from ground -->
         </visual>
         <collision>
             <geometry>
@@ -27,9 +28,9 @@
     <link name="left_wheel">
         <visual>
             <geometry>
-                <cylinder length="0.016" radius="0.0254"/>
+                <mesh filename="package://ddbot_description/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 4.712389" xyz="0 -0.01 0"/>
         </visual>
         <collision>
             <geometry>
@@ -46,9 +47,9 @@
     <link name="right_wheel">
         <visual>
             <geometry>
-                <cylinder length="0.016" radius="0.0254"/>
+                <mesh filename="package://ddbot_description/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0 1.57075" xyz="0 0.01 0"/>
         </visual>
         <collision>
             <geometry>
