@@ -1,8 +1,10 @@
 <launch>
 
+    <arg name="world" default="cafe.world"/>
+
     <param name="robot_description" textfile="$(find ddbot_description)/urdf/robot.urdf"/>
-    <node name="gazebo" type="gazebo" pkg="gazebo_ros" output="screen"/>
+    <node name="gazebo" type="gazebo" pkg="gazebo_ros" output="screen" args="$(find ddbot_gazebo)/worlds/$(arg world)"/>
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-        args="-z 1.0 -b -urdf -model ddbot -param robot_description" respawn="false" output="screen"/>
+        args="-z 1.0 -b -urdf -model ddbot -param robot_description"  respawn="false" output="screen"/>
 
 </launch>

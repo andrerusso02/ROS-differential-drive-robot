@@ -4,20 +4,42 @@
 
     <!--<link name="base_link_dummy"/>-->
 
+    <material name="grey">
+        <color rgba="0.82 0.82 0.82 1.0"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+    </material>
+
+    <gazebo reference="base_link">
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="left_wheel">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <gazebo reference="right_wheel">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
     <link name="base_link">
         <visual>
             <geometry>
                 <mesh filename="package://ddbot_description/meshes/body.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin rpy="1.570796 0 0" xyz="0.0375 0 0"/> <!-- 9 mm from ground -->
+            <origin rpy="1.570796 0 0" xyz="0.0375 0 0.009"/>
+            <material name="grey"/>
         </visual>
         <collision>
             <geometry>
-                <box size="0.251 0.189 0.045"/>
+                <mesh filename="package://ddbot_description/meshes/body.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <origin rpy="0 0 0" xyz="0.0375 0 0.009"/>
+            <origin rpy="1.570796 0 0" xyz="0.0375 0 0.009"/>
         </collision>
         <inertial>
+            <origin rpy="1.570796 0 0" xyz="0.0375 0 0.009"/>
             <mass value="0.9"/>
             <inertia ixx="0.002747" ixy="0.0" ixz="0.0" iyy="0.004793" iyz="0.0" izz="0.007404"/> <!-- height = 3cm -->
         </inertial>
@@ -29,6 +51,7 @@
                 <mesh filename="package://ddbot_description/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <origin rpy="0 0 4.712389" xyz="0 -0.01 0"/>
+            <material name="black"/>
         </visual>
         <collision>
             <geometry>
@@ -48,6 +71,7 @@
                 <mesh filename="package://ddbot_description/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <origin rpy="0 0 1.57075" xyz="0 0.01 0"/>
+            <material name="black"/>
         </visual>
         <collision>
             <geometry>
@@ -71,14 +95,14 @@
     <joint name="wheel_left_joint" type="continuous">
         <parent link="base_link"/>
         <child link="left_wheel"/>
-        <origin xyz="0 0.111 0"/>
+        <origin xyz="0 0.111 0.0254"/>
         <axis xyz="0 1 0"/>
     </joint>
 
     <joint name="wheel_right_joint" type="continuous">
         <parent link="base_link"/>
         <child link="right_wheel"/>
-        <origin xyz="0 -0.111 0"/>
+        <origin xyz="0 -0.111 0.0254"/>
         <axis xyz="0 1 0"/>
     </joint>
 
