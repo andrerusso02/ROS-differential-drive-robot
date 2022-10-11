@@ -7,7 +7,21 @@
     <include file="$(find ddbot_control)/launch/ddbot_control.launch" pass_all_args="true"/>
 
     <group unless="$(arg no_lidar)">
-        <node pkg="ros_lidar" type="lidar_laserscan_publisher.py" name="lidar_laserscan_publisher" args="lidar" required="true">
+
+        <param name="/lidar/zero_position" type="double" value="3.5"/>
+        <param name="/lidar/speed" type="double" value="9.0"/>
+        <param name="/lidar/frame_id" type="str" value="laserscanner_frame"/>
+
+        <node pkg="tf2_ros" type="static_transform_publisher" name="lidar_frame_publisher" args="0.007 -0.0155 0.085 0 0 0 base_link laserscanner_frame" />
+
+        <machine
+            name="robot"
+            address="ddbot"
+            user="ubuntu"
+            env-loader="/home/ubuntu/setup_ros.bash"
+            default="never"
+        />
+        <node pkg="ros_lidar" type="lidar_laserscan_publisher.py" name="lidar_laserscan_publisher" args="lidar" required="true" machine="robot">
             <remap from="/lidar/port_lidar_sensor" to="/peripherials_ports/lidar_sensor" />
             <remap from="/lidar/port_motor" to="/peripherials_ports/arduino_lidar" />
         </node>
