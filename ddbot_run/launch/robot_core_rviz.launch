@@ -5,5 +5,6 @@
 
     <include file="$(find ddbot_run)/launch/robot_core.launch" pass_all_args="true"/>
 
+    <env name="LIBGL_ALWAYS_SOFTWARE" value="true" /> <!-- needed for rviz to display meshes (disables GPU acceleration) -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ddbot_run)/rviz/robot_core.rviz" required="true"/>
 </launch>

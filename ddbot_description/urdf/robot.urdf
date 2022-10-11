@@ -8,8 +8,6 @@
         <visual>
             <geometry>
                 <mesh filename="package://ddbot_description/meshes/body.stl" scale="0.001 0.001 0.001"/>
-                <!--<mesh filename="package://urdf_tutorial/meshes/l_finger.dae"/>-->
-                <!--<box size="0.251 0.189 0.045"/>-->
             </geometry>
             <origin rpy="1.570796 0 0" xyz="0.0375 0 0"/> <!-- 9 mm from ground -->
         </visual>

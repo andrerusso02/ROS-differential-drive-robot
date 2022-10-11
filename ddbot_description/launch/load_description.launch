@@ -1,0 +1,11 @@
+<launch>
+    <arg name="file" default="robot.urdf"/>
+    <arg name="publish_joints" default="true"/>
+
+    <param name="robot_description" textfile="$(find ddbot_description)/urdf/$(arg file)" />
+    
+    <group if="$(arg publish_joints)">
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    </group>
+</launch>
