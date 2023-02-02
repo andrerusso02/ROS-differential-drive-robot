@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="world" default="cafe.world"/>
+    <arg name="world" default="empty.world"/>
 
     <param name="robot_description" textfile="$(find ddbot_description)/urdf/robot.urdf"/>
     <node name="gazebo" type="gazebo" pkg="gazebo_ros" output="screen" args="$(find ddbot_gazebo)/worlds/$(arg world)"/>

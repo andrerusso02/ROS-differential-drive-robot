@@ -35,3 +35,14 @@ Adding this to .bashrc may be convenient : 
 https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1804-fr
 
 And place commands to init ROS in a file ```~/setup_ros.bash``` instead of ```~/.bashrc```
+
+## Run
+
+### In simulation
+```roscore```
+
+```roslaunch ddbot_gazebo simulation.launch```
+
+```roslaunch ddbot_run robot_core_rviz.launch no_lidar:=true no_remote:=true sim:=true```
+
+```roslaunch ddbot_teleop teleop_keyboard.launch```
