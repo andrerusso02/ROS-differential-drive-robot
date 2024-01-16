@@ -1,5 +1,16 @@
 # Differential Drive Robot
 
+**A ROS1 differential drive robot with LiDAR. I built and programmed this robot from scratch with the aim of learning ROS!**
+
+## Pictures
+
+|The robot: DC motors with encoders, Raspberry pi 4, 2 Arduinos Nano, DIY LiDAR.|
+| -------- |
+|<img src="docs/ressources/robot1.jpg"  width="100%">|
+|**Map from SLAM performed by ddbot! Map isn't really clean, but still great considering the LiDAR is DIY.**|
+|<img src="docs/ressources/slam.jpg"  width="100%">|
+
+
 ## rosserial_arduino error workaround
 Check https://answers.ros.org/question/361930/rosserial-arduino-compilation-error-no-cstring/?answer=382803#post-id-382803 (Yash Sahu answer)
 
